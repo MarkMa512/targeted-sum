@@ -1,41 +1,10 @@
 from typing import List
-import csv
 import logging
+from utility.validate import validate
+from utility.csv import read_csv, export_to_csv
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def read_csv(csv_name: str) -> List[int]:
-    """
-    read a csv and return list of integers
-
-    :param csv_name: name of file
-    :return: list of integers
-    """
-    logging.info(f'---reading {csv_name}---')
-    with open(csv_name, newline='') as csvfile:
-        csv_reader = csv.reader(csvfile)
-        return [int(row[0]) for row in csv_reader] # each row is a list of one element, so we return the first element
-    
-def validate(input:list, target:list)-> bool:
-    """
-    validate input and target
-
-    :param input: list of integers
-    :param target: list of targets
-    :return: True if input and target are valid, False otherwise
-    """
-    if len(input) == 0: # if input is empty, return False
-        logging.error('---input is empty!---')
-        return False
-    if len(target) == 0: # if target is empty, return False
-        logging.error('---target is empty!---')
-        return False
-    sum_of_input = sum(input) # sum of input
-    sum_of_target = sum(target) # sum of target
-    if sum_of_input != sum_of_target:
-        logging.error('---sum of input and target are not equal!---')
-        return False
-    return True # return True
 
 def find_combinations(candidates:List[int], target: int, start: int, path: List[int], result: List[List[int]]) -> None:
     """
@@ -95,19 +64,6 @@ def unique_combinations(combinations: List[List[int]]) -> List[List[int]]:
             used_numbers.update(combination)
 
     return unique_combinations
-
-def export_to_csv(combinations:List[List[int]], file_name:str)-> None:
-    """
-    export combinations to csv file
-
-    @param combinations: list of combinations
-    @param file_name: name of file
-    """
-    logging.info(f'---exporting to {file_name}---')
-    with open(file_name, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        for combination in combinations:
-            csv_writer.writerow(combination)
 
 if __name__ == "__main__":
     x = read_csv('input.csv')
