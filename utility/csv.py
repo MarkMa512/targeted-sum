@@ -20,8 +20,8 @@ def export_to_csv(combinations:List[List[int]], file_name:str)-> None:
     """
     export combinations to csv file
 
-    @param combinations: list of combinations
-    @param file_name: name of file
+    :param combinations: list of combinations
+    :param file_name: name of file
     """
     logging.info(f'---exporting to {file_name}---')
     with open(file_name, 'w', newline='') as csv_file:
