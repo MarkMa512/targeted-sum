@@ -33,7 +33,9 @@ def validate_unique(input:list)-> bool:
     :param input: list of integers
     :return: True if input is valid with no duplicates, False otherwise
     """
-    if len(input) != len(set(input)):
+    # convert input to tuple to address unhashable type error
+    input_tuple = tuple(input)
+    if len(input) != len(set(input_tuple)):
         print("All items in the list are unique")
         logging.error('---input contains duplicates! use module for duplicates---')
         return False

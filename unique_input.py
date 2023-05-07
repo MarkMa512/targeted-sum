@@ -1,6 +1,6 @@
 from typing import List
 import logging
-from utility.validation import validate, validate_unique
+from utility.validation import validate, validate_unique, validate_result
 from utility.csv import read_csv, export_to_csv
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     if validate(x, y) and validate_unique(x):
         results = sum_combinations(x, y)
         results = unique_combinations(results)
-        if validate_unique(results):
+        if validate_result(results, x, y):
             export_to_csv(results, 'results.csv')
             print(f"The result is: \n {results}")
         else:
