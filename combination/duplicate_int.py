@@ -1,3 +1,4 @@
+from itertools import combinations
 from typing import List, Dict
 import logging
 from collections import Counter
@@ -25,6 +26,26 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
             continue
         find_combinations(candidates, target - candidates[i], i + 1, path + [candidates[i]], result)
 
+# if 0 is provided in the target list, it has to be dealt with separately
+def find_zero_sum_combination(candidates: List[int]) -> List[int]:
+    """
+    from the given candidate list, found out the elements that sums up to 0
+
+    :param candidate: list of candidates, which may contain duplicates, zero, or negative numbers
+    
+    :return: list of elements that sums up to 0
+    """
+    logger.info('---finding combinations that sum up to 0---')
+    for i in range(1, len(candidates) + 1):
+        for combination in combinations(candidates, i):
+            if sum(combination) == 0:
+                zero_sum_result: List[int] = list(combination)
+                logger.info(f'---found {len(zero_sum_result)} combinations that sum up to 0---')
+                logger.info(f'---combinations that sum up to 0: {zero_sum_result}---')
+                return zero_sum_result
+    return []
+    
+
 def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List[int]]:
     """
     find all combinations of input_list that sum to target_list
@@ -35,11 +56,37 @@ def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List
     :return: list of combinations
     """
     logger.info('---finding combinations---')
-    input_list.sort()
+
+    # create a copy of input_list and target_list so that the original list is not modified
+    input_list_copy = input_list.copy()
+    target_list_copy = target_list.copy()
+
+    input_list_copy.sort()
     result: List[List[int]] = []
-    for target in target_list:
+
+    # check if 0 is present in target_list
+    zero_count = target_list.count(0)
+    # while there is >0 zero in target_list, find combinations that sum up to 0
+    while zero_count > 0: 
+        # find the combination that sums up to 0
+        zero_sum_combination: List[int] = find_zero_sum_combination(input_list)
+        # if there is a combination that sums up to 0, 
+        if zero_sum_combination:
+            # append to result and 
+            result.append(zero_sum_combination)
+            # remove the elements in the combination from input_list_copy. This is because the original list is not modified
+            # so that it can be used later to valid combinations
+            input_list_copy = [elem for elem in input_list_copy if elem not in zero_sum_combination] 
+            zero_count -= 1 # reduce zero_count by 1
+        else: # if there is no combination that sums up to 0, break
+            break
+    
+    # Update the target_list to remove the 0s
+    target_list_copy = [elem for elem in target_list_copy if elem != 0]
+
+    for target in target_list_copy:
         res: List[List[int]] = []
-        find_combinations(input_list, target, 0, [], res)
+        find_combinations(input_list_copy, target, 0, [], res)
         result.extend(res)
     return result
 
@@ -101,7 +148,7 @@ def backtrack(
     # Try skipping the current combination
     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
 
-    # Check for a 0-sum combination while constructing the combinations
+    # # Check for a 0-sum combination while constructing the combinations
     # if comb_sum == 0 and output_remaining[0] > 0:
     #     output_remaining[0] -= 1
     #     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))

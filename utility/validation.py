@@ -61,6 +61,7 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
     :return: True if result is valid by ensuring that: 
         1) the length of result is equal to the length of target
         2) the count of each element in result is equal to the count of the same element in x
+        3) there is no empty combination in result
     False otherwise
     """
     logger.info('---checking the length of result---')
@@ -79,6 +80,10 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
     
     for combination in result:
         combination_count: Dict[int, int] = Counter(combination)
+        logger.info('---checking if result contains empty combination---')
+        if len(combination) == 0:
+            logger.error('+++result contains empty combination!+++')
+            return False
         logger.info('---checking each combination for counts of elements less than or equal to the counts of the same elements in x---')
         for key in combination_count:
             # check for individual combination, if the count of an element in a combination is greater than the count of the same element in x, return False
