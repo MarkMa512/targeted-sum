@@ -1,7 +1,5 @@
 from typing import List
 import logging
-from utility.validation import validate_input_target, validate_unique_input, validate_result
-from utility.csv import read_csv, export_to_csv
 
 logger = logging.getLogger(__name__)
 
@@ -46,33 +44,21 @@ def sum_combinations(x: List[int], y: List[int]) -> List[List[int]]:
         results.extend(res) # add combinations to result
     return results # return result
 
-def unique_combinations(combinations: List[List[int]]) -> List[List[int]]:
+def filter_redundant_combinations(combinations: List[List[int]]) -> List[List[int]]:
     """
-    filter out combinations that contain duplicate numbers
+    filter out combinations that contain duplicate numbers which have already been used
 
     :param combinations: list of combinations
     :return: list of unique combinations
     """
-    logger.info('---filtering out duplicate numbers---')
+    logger.info('---filtering out redundant combinations')
+    
+    used_numbers = set() # set of used numbers
+    unique_combinations = [] # list of unique combinations
 
-    used_numbers = set()
-    unique_combinations = []
-
-    for combination in combinations:
-        if not any(num in used_numbers for num in combination):
-            unique_combinations.append(combination)
-            used_numbers.update(combination)
-
+    for combination in combinations: # iterate over combinations
+        if not any(num in used_numbers for num in combination): # if no number in combination has been used
+            unique_combinations.append(combination) # add combination to unique combinations
+            used_numbers.update(combination) # add combination to used numbers 
+            # we can do this because we know that all the numbers in the input list are unique
     return unique_combinations
-
-if __name__ == "__main__":
-    x = read_csv('input.csv')
-    y = read_csv('target.csv')
-    if validate_input_target(x, y) and validate_unique_input(x):
-        results = sum_combinations(x, y)
-        results = unique_combinations(results)
-        if validate_result(results, x, y):
-            export_to_csv(results, 'results.csv')
-            print(f"The result is: \n {results}")
-        else:
-            logger.error('No valid result found')

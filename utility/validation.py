@@ -49,13 +49,19 @@ def validate_result(result: List[List[int]], x: List[int],y:List[int] )-> bool:
     """
     validate result by checking if it: 
 
-    :param result: list of combinations
-    :return: True if result is valid with no duplicates, False otherwise
+    :param result: list of combinations of x that sum to y
+    :return: True if result is valid by ensuring that: 
+        1) the length of result is equal to the length of target
+        2) the count of each element in result is equal to the count of the same element in x
+    False otherwise
     """
     logger.info('---checking the length of result---')
     logger.info(f"---length of result: {len(result)}, length of target: {len(y)}---")
+    if len(result) == 0:
+        logger.error('+++result is empty, no valid combination found!+++')
+        return False
     if len(result) != len(y):
-        logger.error('+++length of result is not equal to length of target!+++')
+        logger.error('+++length of result does not equal to length of target!+++')
         return False
     logger.info(f"===length of result is equal to length of target!===")
     
@@ -65,7 +71,7 @@ def validate_result(result: List[List[int]], x: List[int],y:List[int] )-> bool:
 
     for combination in result:
         combination_count: Dict[int, int] = Counter(combination)
-        logger.info('---checking if combination has counts of elements less than or equal to the counts of the same elements in x---')
+        logger.info('---checking each combination for counts of elements less than or equal to the counts of the same elements in x---')
         for key in combination_count:
             # check for individual combination, if the count of an element in a combination is greater than the count of the same element in x, return False
             logger.info(f'---count of {key} in combination: {combination_count[key]}, count of {key} in x: {x_element_count[key]}---')
@@ -74,6 +80,7 @@ def validate_result(result: List[List[int]], x: List[int],y:List[int] )-> bool:
                 return False
             result_element_count[key] += combination_count[key]
     
+    logger.info('---checking the whole result for counts of elements less than or equal to the counts of the same elements in x---')    
     # check for the whole result, if the count of an element in result is not equal to the count of the same element in x, return False
     for key in x_element_count:
         logger.info(f'---count of {key} in x: {x_element_count[key]}, count of {key} in result: {result_element_count[key]}---')
