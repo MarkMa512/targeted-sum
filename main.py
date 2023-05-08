@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 def main()->None:
     logger.info("---reading input file---")
-    input_list = read_csv('input.csv')
-    target_list = read_csv('target.csv')
+    input_list = read_csv('input_duplicate.csv')
+    target_list = read_csv('target_duplicate.csv')
 
     logger.info("---validating input and target---")
     if not validate_input_target(input_list, target_list):
@@ -28,9 +28,9 @@ def main()->None:
     for result in viable_results:
         if validate_result(result=result, input_list=input_list, output_list=target_list):
             logger.info(f"---result {counter} is valid---")
+            print(result)
             export_to_csv(result, f"result_{counter}.csv")
             counter += 1
-    
     logger.info("---done---")
 
 

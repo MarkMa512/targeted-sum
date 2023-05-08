@@ -27,6 +27,7 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
             continue
         find_combinations(candidates, target - candidates[i], i + 1, path + [candidates[i]], result)
 
+
 def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List[int]]:
     """
     find all combinations of input_list that sum to target_list
@@ -45,6 +46,7 @@ def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List
         result.extend(res)
     return result
 
+
 def count_occurrences(int_list: List[int]) -> Dict[int, int]:
     """
     count the occurrences of each element in a list
@@ -55,17 +57,6 @@ def count_occurrences(int_list: List[int]) -> Dict[int, int]:
     """
     return Counter(int_list)
 
-def all_subsets(result: List[List[int]]) -> Iterator[Tuple[List[int]]]:
-    """
-    find all subsets of a list
-
-    :param s: list of list of integers
-
-    :return: iterator of all subsets
-    """
-    logger.info('---finding all subsets---')
-    iterator:Iterator[Tuple[List[int]]] = chain.from_iterable(combinations(result, r) for r in range(len(result)+1))
-    return iterator
 
 def backtrack(
     x_counts: Dict[int, int],
@@ -82,6 +73,7 @@ def backtrack(
         return []
 
     results = []
+
 
     # Try adding the current combination to the solution
     comb_sum = sum(combinations[index])
@@ -102,6 +94,7 @@ def backtrack(
     results.extend(backtrack(x_counts, y_counts, combinations, current, index + 1, x_remaining, y_remaining))
 
     return results
+
 
 def filter_redundant_combinations_set(x: List[int], y: List[int], combinations: List[List[int]]) -> List[List[List[int]]]:
     x_counts = count_occurrences(x)
