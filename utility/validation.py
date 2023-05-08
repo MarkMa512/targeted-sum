@@ -4,7 +4,7 @@ from collections import Counter
 
 logger = logging.getLogger(__name__)
 
-def validate_input(input:list, target:list)-> bool:
+def validate_input_target(input:list, target:list)-> bool:
     """
     validate input and target
 
@@ -12,6 +12,7 @@ def validate_input(input:list, target:list)-> bool:
     :param target: list of targets
     :return: True if input and target are valid, False otherwise
     """
+    logging.info('---validating input and target---')
     if len(input) == 0: # if input is empty, return False
         logger.error('---input is empty!---')
         return False
@@ -24,6 +25,7 @@ def validate_input(input:list, target:list)-> bool:
         logger.error('---sum of input and target are not equal!---')
         logger.error('---sum of input: %s, sum of target: %s---', sum_of_input, sum_of_target)
         return False
+    logger.info('---input and target are valid---')
     return True # return True
 
 def validate_unique_input(input:list)-> bool:
@@ -33,14 +35,14 @@ def validate_unique_input(input:list)-> bool:
     :param input: list of integers
     :return: True if input is valid with no duplicates, False otherwise
     """
+    logger.info('---checking if input contains duplicates---')
     # convert input to tuple to address unhashable type error
     input_tuple = tuple(input)
     if len(input) != len(set(input_tuple)):
-        print("All items in the list are unique")
-        logger.error('---input contains duplicates! use module for duplicates---')
+        logger.info('---input contains duplicates! use module for duplicates---')
         return False
 
-    logger.info('---input is valid, all elements are unique---')
+    logger.info('---all elements in input are unique---')
     return True # return True
 
 def validate_result(result: List[List[int]], x: List[int],y:List[int] )-> bool:

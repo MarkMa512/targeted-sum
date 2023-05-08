@@ -1,6 +1,6 @@
 from typing import List
 import logging
-from utility.validation import validate_input, validate_unique, validate_result
+from utility.validation import validate_input_target, validate_unique_input, validate_result
 from utility.csv import read_csv, export_to_csv
 
 logger = logging.getLogger(__name__)
@@ -68,7 +68,7 @@ def unique_combinations(combinations: List[List[int]]) -> List[List[int]]:
 if __name__ == "__main__":
     x = read_csv('input.csv')
     y = read_csv('target.csv')
-    if validate_input(x, y) and validate_unique(x):
+    if validate_input_target(x, y) and validate_unique_input(x):
         results = sum_combinations(x, y)
         results = unique_combinations(results)
         if validate_result(results, x, y):

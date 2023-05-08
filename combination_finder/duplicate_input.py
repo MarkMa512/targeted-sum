@@ -1,6 +1,6 @@
 from typing import List, Dict
 from utility.csv import read_csv, export_to_csv
-from utility.validation import validate_input, validate_result
+from utility.validation import validate_input_target, validate_result
 import logging
 from collections import Counter
 
@@ -111,7 +111,7 @@ def unique_combinations(x: List[int], combinations: List[List[int]]) -> List[Lis
 if __name__ == "__main__":
     x = read_csv('input_duplicate.csv')
     y = read_csv('target_duplicate.csv')
-    if validate_input(x, y):
+    if validate_input_target(x, y):
         results = sum_combinations(x, y)
         # results = unique_combinations(x, results)
         # if validate_result(results, x, y):
