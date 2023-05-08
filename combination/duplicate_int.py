@@ -67,7 +67,7 @@ def all_subsets(result: List[List[int]]) -> Iterator[Tuple[List[int]]]:
     iterator:Iterator[Tuple[List[int]]] = chain.from_iterable(combinations(result, r) for r in range(len(result)+1))
     return iterator
 
-def filter_redundant_combinations(input_list: List[int], target_list: List[int], result: List[List[int]]) -> List[List[List[int]]]:
+def filter_redundant_combinations_set(input_list: List[int], target_list: List[int], result: List[List[int]]) -> List[List[List[int]]]:
     """
     filter out redundant combinations
 
@@ -100,7 +100,44 @@ def filter_redundant_combinations(input_list: List[int], target_list: List[int],
         
         # If both conditions are met, add the subset to the viable results
         if is_valid_x and is_valid_y:
-            viable_results.append(subset)
+            viable_results.append(list(subset))
     
-    
+
     return viable_results
+
+def filter_redundant_combinations(input_list: List[int], target_list: List[int], result: List[List[int]]) -> List[List[int]]:
+    """
+    filter out redundant combinations
+
+    :param input_list: list of input that is used to generate combinations, it may contain duplicates
+    :param target_list: list of targets
+    :param results: list of combinations generated from input_list
+
+    :return: overall valid combinations that: 
+        1) do not contain count of any number in the overall combination that is greater than count of that number in x, 
+        2) while contains all numbers in x
+    """
+    logger.info('---filtering redundant combinations---')
+    # count the occurrences of each element
+    input_list_counts:Dict[int, int] = count_occurrences(input_list) 
+    # count the occurrences of each element in y
+    target_list_counts: Dict[int, int] = count_occurrences(target_list) 
+
+
+     # iterate through all the combination of in result
+    for subset in all_subsets(result):
+        combined_subset = [item for sublist in subset for item in sublist] # flatten the subset
+        subset_counts: Dict[int, int] = count_occurrences(combined_subset) # count the occurrences of each element in the subset
+        
+        # Check if all the elements in x have appeared in the overall combinations for the same number of times they are present in x
+        is_valid_x = all(subset_counts[element] == count for element, count in input_list_counts.items())
+
+        # Check if all the elements in y as the target have been accounted for
+        is_valid_y = all(sum([1 for c in subset if sum(c) == target]) >= count for target, count in target_list_counts.items())
+        
+        # If both conditions are met, return the subset
+        if is_valid_x and is_valid_y:
+            return list(subset)
+    
+    # If no valid subset is found, return empty list
+    return []
