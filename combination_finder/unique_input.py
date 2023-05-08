@@ -18,15 +18,15 @@ def find_combinations(candidates:List[int], target: int, start: int, path: List[
     
     :return: None
     """
-    if target == 0:
-        result.append(path)
-        return
-    if target < 0:
-        return
-    for i in range(start, len(candidates)):
-        if i > start and candidates[i] == candidates[i - 1]:
-            continue
-        find_combinations(candidates, target - candidates[i], i + 1, path + [candidates[i]], result)
+    if target == 0: # if target is 0
+        result.append(path) # add path to result
+        return # return
+    if target < 0: # if target is negative
+        return # return
+    for i in range(start, len(candidates)): # iterate over candidates
+        if i > start and candidates[i] == candidates[i - 1]: # if current candidate is the same as the previous candidate
+            continue # skip current candidate
+        find_combinations(candidates, target - candidates[i], i + 1, path + [candidates[i]], result) # find combinations for current candidate
 
 def sum_combinations(x: List[int], y: List[int]) -> List[List[int]]:
     """
