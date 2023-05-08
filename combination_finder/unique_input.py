@@ -1,9 +1,9 @@
 from typing import List
 import logging
-from utility.validation import validate, validate_unique, validate_result
+from utility.validation import validate_input, validate_unique, validate_result
 from utility.csv import read_csv, export_to_csv
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 
 def find_combinations(candidates:List[int], target: int, start: int, path: List[int], result: List[List[int]]) -> None:
@@ -37,7 +37,7 @@ def sum_combinations(x: List[int], y: List[int]) -> List[List[int]]:
 
     :return: list of combinations
     """
-    logging.info('---finding combinations---')
+    logger.info('---finding combinations---')
     x.sort() # sort x
     results = [] # result list
     for target in y: # iterate over targets
@@ -53,7 +53,7 @@ def unique_combinations(combinations: List[List[int]]) -> List[List[int]]:
     :param combinations: list of combinations
     :return: list of unique combinations
     """
-    logging.info('---filtering out duplicate numbers---')
+    logger.info('---filtering out duplicate numbers---')
 
     used_numbers = set()
     unique_combinations = []
@@ -68,11 +68,11 @@ def unique_combinations(combinations: List[List[int]]) -> List[List[int]]:
 if __name__ == "__main__":
     x = read_csv('input.csv')
     y = read_csv('target.csv')
-    if validate(x, y) and validate_unique(x):
+    if validate_input(x, y) and validate_unique(x):
         results = sum_combinations(x, y)
         results = unique_combinations(results)
         if validate_result(results, x, y):
             export_to_csv(results, 'results.csv')
             print(f"The result is: \n {results}")
         else:
-            logging.error('No valid result found')
+            logger.error('No valid result found')

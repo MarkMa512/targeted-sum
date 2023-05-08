@@ -1,8 +1,10 @@
 from typing import List, Dict
 from utility.csv import read_csv, export_to_csv
-from utility.validation import validate, validate_result
+from utility.validation import validate_input, validate_result
 import logging
 from collections import Counter
+
+logger = logging.getLogger(__name__)
 
 def find_combinations(candidates: List[int], target: int, start: int, path: List[int], result: List[List[int]]) -> None:
     """
@@ -44,7 +46,7 @@ def sum_combinations(x: List[int], y: List[int]) -> List[List[int]]:
 
     :return: list of combinations
     """
-    logging.info('---finding combinations---')
+    logger.info('---finding combinations---')
     x.sort()
     results = []
     for target in y:
@@ -87,7 +89,7 @@ def unique_combinations(x: List[int], combinations: List[List[int]]) -> List[Lis
 
     :return: list of unique combinations
     """
-    logging.info('---filtering out duplicate combinations---')
+    logger.info('---filtering out duplicate combinations---')
     x_count = count_occurrences(x)
     unique_combinations = []
 
@@ -109,7 +111,7 @@ def unique_combinations(x: List[int], combinations: List[List[int]]) -> List[Lis
 if __name__ == "__main__":
     x = read_csv('input_duplicate.csv')
     y = read_csv('target_duplicate.csv')
-    if validate(x, y):
+    if validate_input(x, y):
         results = sum_combinations(x, y)
         # results = unique_combinations(x, results)
         # if validate_result(results, x, y):
