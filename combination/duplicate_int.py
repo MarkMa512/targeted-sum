@@ -16,10 +16,10 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
 
     :return: None
     """
-    if target == 0:
+    if target == 0: # if target is 0, append path to result
         result.append(path)
         return
-    if target < 0:
+    if target < 0: # if target is less than 0, return
         return
     for i in range(start, len(candidates)):
         if i > start and candidates[i] == candidates[i - 1]:

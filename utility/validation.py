@@ -76,7 +76,7 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
     logger.info('---checking if the result has the same count of numbers as per x---')
     x_element_count: Dict[int, int] = Counter(input_list)
     result_element_count: Dict[int, int] = Counter()
-
+    
     for combination in result:
         combination_count: Dict[int, int] = Counter(combination)
         logger.info('---checking each combination for counts of elements less than or equal to the counts of the same elements in x---')
