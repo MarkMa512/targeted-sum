@@ -1,7 +1,6 @@
-from typing import List, Dict, Tuple, Iterator
+from typing import List, Dict
 import logging
 from collections import Counter
-from itertools import chain, combinations
 
 logger = logging.getLogger(__name__)
 
@@ -57,52 +56,77 @@ def count_occurrences(int_list: List[int]) -> Dict[int, int]:
     """
     return Counter(int_list)
 
-
 def backtrack(
-    x_counts: Dict[int, int],
-    y_counts: Dict[int, int],
+    input_count: Dict[int, int],
+    target_count: Dict[int, int],
     combinations: List[List[int]],
     current: List[List[int]],
     index: int,
-    x_remaining: Dict[int, int],
-    y_remaining: Dict[int, int],
+    input_remaining: Dict[int, int],
+    output_remaining: Dict[int, int],
 ) -> List[List[List[int]]]:
+    """
+    backtracking algorithm to find all combinations of input_list and target_list that sum to target list
+
+    :param input_count: dictionary of occurrences of each element in input_list
+    :param target_count: dictionary of occurrences of each element in target_list
+    :param combinations: list of combinations of elements in input_list that sum to elements in target_list
+    :param current: current combination
+    :param index: current index
+    :param input_remaining: remaining occurrences of each element in input_list
+    :param output_remaining: remaining occurrences of each element in target_list
+
+    :return: list of combinations of viable combinations
+    """
     if index == len(combinations):
-        if all(x_remaining[k] == 0 for k in x_remaining) and all(y_remaining[k] == 0 for k in y_remaining):
+        if all(input_remaining[k] == 0 for k in input_remaining) and all(output_remaining[k] == 0 for k in output_remaining):
             return [current.copy()]
         return []
 
     results = []
 
-
     # Try adding the current combination to the solution
     comb_sum = sum(combinations[index])
-    if y_remaining[comb_sum] > 0 and all(x_remaining[k] >= 0 for k in x_remaining):
+    if output_remaining[comb_sum] > 0 and all(input_remaining[k] >= 0 for k in input_remaining):
         for elem in combinations[index]:
-            x_remaining[elem] -= 1
-        y_remaining[comb_sum] -= 1
+            input_remaining[elem] -= 1
+        output_remaining[comb_sum] -= 1
 
         current.append(combinations[index])
-        results.extend(backtrack(x_counts, y_counts, combinations, current, index + 1, x_remaining, y_remaining))
+        results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
         current.pop()
 
         for elem in combinations[index]:
-            x_remaining[elem] += 1
-        y_remaining[comb_sum] += 1
+            input_remaining[elem] += 1
+        output_remaining[comb_sum] += 1
 
     # Try skipping the current combination
-    results.extend(backtrack(x_counts, y_counts, combinations, current, index + 1, x_remaining, y_remaining))
+    results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+
+    # Check for a 0-sum combination while constructing the combinations
+    if comb_sum == 0 and output_remaining[0] > 0:
+        output_remaining[0] -= 1
+        results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+        output_remaining[0] += 1
 
     return results
 
 
-def filter_redundant_combinations_set(x: List[int], y: List[int], combinations: List[List[int]]) -> List[List[List[int]]]:
-    x_counts = count_occurrences(x)
-    y_counts = count_occurrences(y)
+def filter_redundant_combinations_set(input_list: List[int], target_list: List[int], combinations: List[List[int]]) -> List[List[List[int]]]:
+    """
+    filter out redundant combinations 
 
-    x_remaining = x_counts.copy()
-    y_remaining = y_counts.copy()
+    :param input_list: list of candidates, which may contain duplicates, zero, or negative numbers
+    :param target_list: list of targets which may contain duplicates, zero, or negative numbers and to be summed to
 
-    results = backtrack(x_counts, y_counts, combinations, [], 0, x_remaining, y_remaining)
+    :return: list of viable combinations
+    """
+    x_counts: Dict[int, int] = count_occurrences(input_list)
+    y_counts: Dict[int, int] = count_occurrences(target_list)
+
+    x_remaining: Dict[int, int] = x_counts.copy()
+    y_remaining: Dict[int, int] = y_counts.copy()
+
+    results: List[List[List[int]]]= backtrack(x_counts, y_counts, combinations, [], 0, x_remaining, y_remaining)
 
     return results

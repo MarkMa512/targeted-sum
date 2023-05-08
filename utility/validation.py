@@ -4,7 +4,7 @@ from collections import Counter
 
 logger = logging.getLogger(__name__)
 
-def validate_input_target(input:list, target:list)-> bool:
+def validate_input_target(input_list:list, target_list:list)-> bool:
     """
     validate input and target
 
@@ -13,19 +13,27 @@ def validate_input_target(input:list, target:list)-> bool:
     :return: True if input and target are valid, False otherwise
     """
     logging.info('---validating input and target---')
-    if len(input) == 0: # if input is empty, return False
+    if len(input_list) == 0: # if input is empty, return False
         logger.error('---input is empty!---')
         return False
-    if len(target) == 0: # if target is empty, return False
+    if len(target_list) == 0: # if target is empty, return False
         logger.error('---target is empty!---')
         return False
-    sum_of_input = sum(input) # sum of input
-    sum_of_target = sum(target) # sum of target
+    sum_of_input = sum(input_list) # sum of input
+    sum_of_target = sum(target_list) # sum of target
     if sum_of_input != sum_of_target:
         logger.error('---sum of input and target are not equal!---')
         logger.error('---sum of input: %s, sum of target: %s---', sum_of_input, sum_of_target)
         return False
-    logger.info('---input and target are valid---')
+    logger.info('---sum of input and target are equal---')
+
+    if any(target <= 0 for target in target_list): # if any target is less than or equal to 0, the input list must have at least one element that is less than or equal to 0
+        logger.info('---negative or zero target found, checking if input has negative or zero element---')
+        if all(input > 0 for input in input_list): # if all input is greater than 0, return False
+            logger.error('---all input is greater than 0, return False---')
+            return False
+    
+    logger.info('===input and target are valid===')
     return True # return True
 
 def validate_unique_input(input:list)-> bool:
