@@ -29,21 +29,21 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
 
 def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List[int]]:
     """
-    find all combinations of x that sum to y
+    find all combinations of input_list that sum to target_list
 
-    :param x: list of candidates, which may contain duplicates
-    :param y: list of targets
+    :param input_list: list of candidates, which may contain duplicates
+    :param target_list: list of targets
 
     :return: list of combinations
     """
     logger.info('---finding combinations---')
     input_list.sort()
-    results = []
+    result: List[List[int]] = []
     for target in target_list:
-        res = []
+        res: List[List[int]] = []
         find_combinations(input_list, target, 0, [], res)
-        results.extend(res)
-    return results
+        result.extend(res)
+    return result
 
 def count_occurrences(int_list: List[int]) -> Dict[int, int]:
     """
@@ -64,10 +64,10 @@ def all_subsets(result: List[List[int]]) -> Iterator[Tuple[List[int]]]:
     :return: iterator of all subsets
     """
     logger.info('---finding all subsets---')
-    iterator = chain.from_iterable(combinations(result, r) for r in range(len(result)+1))
+    iterator:Iterator[Tuple[List[int]]] = chain.from_iterable(combinations(result, r) for r in range(len(result)+1))
     return iterator
 
-def filter_redundant_combinations(input_list: List[int], target_list: List[int], result: List[List[int]]) -> List[List[int]]:
+def filter_redundant_combinations(input_list: List[int], target_list: List[int], result: List[List[int]]) -> List[List[List[int]]]:
     """
     filter out redundant combinations
 
@@ -81,14 +81,16 @@ def filter_redundant_combinations(input_list: List[int], target_list: List[int],
     """
     logger.info('---filtering redundant combinations---')
     # count the occurrences of each element
-    input_list_counts = count_occurrences(input_list) 
+    input_list_counts:Dict[int, int] = count_occurrences(input_list) 
     # count the occurrences of each element in y
-    target_list_counts = count_occurrences(target_list) 
+    target_list_counts: Dict[int, int] = count_occurrences(target_list) 
 
-     # iterate through all the subsets of combinations
+    viable_results: List[List[List[int]]] = []
+
+     # iterate through all the combination of in result
     for subset in all_subsets(result):
         combined_subset = [item for sublist in subset for item in sublist] # flatten the subset
-        subset_counts = count_occurrences(combined_subset) # count the occurrences of each element in the subset
+        subset_counts: Dict[int, int] = count_occurrences(combined_subset) # count the occurrences of each element in the subset
         
         # Check if all the elements in x have appeared in the overall combinations for the same number of times they are present in x
         is_valid_x = all(subset_counts[element] == count for element, count in input_list_counts.items())
@@ -96,9 +98,9 @@ def filter_redundant_combinations(input_list: List[int], target_list: List[int],
         # Check if all the elements in y as the target have been accounted for
         is_valid_y = all(sum([1 for c in subset if sum(c) == target]) >= count for target, count in target_list_counts.items())
         
-        # If both conditions are met, return the subset
+        # If both conditions are met, add the subset to the viable results
         if is_valid_x and is_valid_y:
-            return list(subset)
+            viable_results.append(subset)
     
-    # If no valid subset is found, return an empty list
-    return []
+    
+    return viable_results

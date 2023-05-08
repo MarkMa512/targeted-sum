@@ -1,3 +1,7 @@
+"""
+Retired module for finding unique combinations of integers that sum to a target as it is a subset of duplicate_int.py
+"""
+
 from typing import List
 import logging
 
