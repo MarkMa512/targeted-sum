@@ -16,16 +16,14 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
 
     :return: None
     """
+
     if target == 0: # if target is 0, append path to result
         result.append(path)
-        return
-    if target < 0: # if target is less than 0, return
         return
     for i in range(start, len(candidates)):
         if i > start and candidates[i] == candidates[i - 1]:
             continue
         find_combinations(candidates, target - candidates[i], i + 1, path + [candidates[i]], result)
-
 
 def sum_combinations(input_list: List[int], target_list: List[int]) -> List[List[int]]:
     """
@@ -104,10 +102,10 @@ def backtrack(
     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
 
     # Check for a 0-sum combination while constructing the combinations
-    if comb_sum == 0 and output_remaining[0] > 0:
-        output_remaining[0] -= 1
-        results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
-        output_remaining[0] += 1
+    # if comb_sum == 0 and output_remaining[0] > 0:
+    #     output_remaining[0] -= 1
+    #     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+    #     output_remaining[0] += 1
 
     return results
 

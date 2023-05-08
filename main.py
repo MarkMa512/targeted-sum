@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 
 def main()->None:
     logger.info("---reading input file---")
-    input_list = read_csv('input_duplicate_neg_zero.csv')
-    target_list = read_csv('target_duplicate_neg_zero.csv')
+    input_list = read_csv('input_duplicate_neg.csv')
+    target_list = read_csv('target_duplicate_neg.csv')
 
     logger.info("---validating input and target---")
     if not validate_input_target(input_list, target_list):
