@@ -148,11 +148,11 @@ def backtrack(
     # Try skipping the current combination
     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
 
-    # # Check for a 0-sum combination while constructing the combinations
-    # if comb_sum == 0 and output_remaining[0] > 0:
-    #     output_remaining[0] -= 1
-    #     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
-    #     output_remaining[0] += 1
+    # Check for a 0-sum combination while constructing the combinations
+    if comb_sum == 0 and output_remaining[0] > 0:
+        output_remaining[0] -= 1
+        results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+        output_remaining[0] += 1
 
     return results
 
@@ -173,5 +173,4 @@ def filter_redundant_combinations_set(input_list: List[int], target_list: List[i
     y_remaining: Dict[int, int] = y_counts.copy()
 
     results: List[List[List[int]]]= backtrack(x_counts, y_counts, combinations, [], 0, x_remaining, y_remaining)
-
     return results

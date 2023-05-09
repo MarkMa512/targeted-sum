@@ -36,6 +36,9 @@ def validate_input_target(input_list:list, target_list:list)-> bool:
     logger.info('===input and target are valid===')
     return True # return True
 
+"""
+Retired validation function as unique input is a subset of input with duplicates
+"""
 def validate_unique_input(input:list)-> bool:
     """
     validate input by checking if it contains duplicates
@@ -104,3 +107,15 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
 
     logger.info('===result is valid===')
     return True
+
+def validate_viable_result_sets(viable_results: List[List[List[int]]])->bool:
+    logger.info('---validating viable result sets---')
+    viable_result_count:int = len(viable_results)
+    logger.info(f'---{viable_result_count} viable result sets found---')
+    if viable_result_count == 0:
+        logger.error('+++viable result sets is empty!+++')
+        logger.info('===No viable combination found===')
+        return False
+    logger.info('===viable result sets is not empty===')
+    return True
+    

@@ -2,7 +2,7 @@ import logging
 from typing import List
 from combination.duplicate_int import sum_combinations, filter_redundant_combinations_set
 from utility.csv import read_csv, export_to_csv
-from utility.validation import validate_input_target, validate_result
+from utility.validation import validate_input_target, validate_result, validate_viable_result_sets
 
 logging.basicConfig(format="%(asctime)s %(levelname)s %(filename)s:%(funcName)s():%(lineno)i: %(message)s",
                     datefmt="%Y-%m-%d %H:%M:%S", level=logging.DEBUG)
@@ -27,6 +27,8 @@ def main()->None:
     all_combinations: List[List[int]] = sum_combinations(input_list, target_list)
     logger.info("---filtering out redundant combinations---")
     viable_results: List[List[List[int]]] = filter_redundant_combinations_set(input_list, target_list, all_combinations)
+    if not validate_viable_result_sets(viable_results):
+        return
     logger.info("---validating result---")
     counter: int = 0
     for result in viable_results:
