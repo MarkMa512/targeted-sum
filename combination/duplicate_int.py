@@ -21,6 +21,7 @@ def find_combinations(candidates: List[int], target: int, start: int, path: List
     if target == 0: # if target is 0, append path to result
         result.append(path)
         return
+    # for each element in candidates, find the combinations that sum up to target
     for i in range(start, len(candidates)):
         if i > start and candidates[i] == candidates[i - 1]:
             continue
@@ -123,25 +124,37 @@ def backtrack(
 
     :return: list of combinations of viable combinations
     """
+    # Base case, if all elements in input_list and target_list are used, return the current combination
     if index == len(combinations):
+        # check if all elements in input_list and target_list are used
         if all(input_remaining[k] == 0 for k in input_remaining) and all(output_remaining[k] == 0 for k in output_remaining):
+            # return a copy of current combination
             return [current.copy()]
         return []
 
+    # Initialize the results
     results = []
 
     # Try adding the current combination to the solution
     comb_sum = sum(combinations[index])
+
+    # Check if the current combination is viable
     if output_remaining[comb_sum] > 0 and all(input_remaining[k] >= 0 for k in input_remaining):
+        # Update the remaining occurrences of each element in input_list and target_list
         for elem in combinations[index]:
             input_remaining[elem] -= 1
         output_remaining[comb_sum] -= 1
-
+        
+        # Add the current combination to the solution
         current.append(combinations[index])
+        # Try adding the current combination to the solution
         results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+        # Remove the current combination from the solution
         current.pop()
 
+        # Update the remaining occurrences of each element in input_list and target_list
         for elem in combinations[index]:
+            # Add back the occurrences of each element in input_list and target_list
             input_remaining[elem] += 1
         output_remaining[comb_sum] += 1
 
@@ -149,9 +162,13 @@ def backtrack(
     results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
 
     # Check for a 0-sum combination while constructing the combinations
+    # If there is a 0-sum combination, add it to the solution
     if comb_sum == 0 and output_remaining[0] > 0:
+        # Update the remaining occurrences of each element in input_list and target_list
         output_remaining[0] -= 1
+        # Add the current combination to the solution
         results.extend(backtrack(input_count, target_count, combinations, current, index + 1, input_remaining, output_remaining))
+        # Update the remaining occurrences of each element in input_list and target_list
         output_remaining[0] += 1
 
     return results
@@ -166,11 +183,14 @@ def filter_redundant_combinations_set(input_list: List[int], target_list: List[i
 
     :return: list of viable combinations
     """
+    # Count the occurrences of each element in input_list and target_list
     x_counts: Dict[int, int] = count_occurrences(input_list)
     y_counts: Dict[int, int] = count_occurrences(target_list)
 
+    # Initialize the remaining occurrences of each element in input_list and target_list
     x_remaining: Dict[int, int] = x_counts.copy()
     y_remaining: Dict[int, int] = y_counts.copy()
 
+    # Find all viable combinations using backtracking
     results: List[List[List[int]]]= backtrack(x_counts, y_counts, combinations, [], 0, x_remaining, y_remaining)
     return results
