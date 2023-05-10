@@ -16,8 +16,18 @@ def main()->None:
     Returns:None
     """
     logger.info("---reading input file---")
-    input_list: List[int] = read_csv('input_duplicate_neg.csv')
-    target_list: List [int] = read_csv('target_duplicate_neg.csv')
+    try: 
+        input_list: List[int] = read_csv('input.csv')
+    except FileNotFoundError: 
+        logger.error("+++input file not found+++")
+        return
+    
+    logger.info("---reading target file---")
+    try: 
+        target_list: List [int] = read_csv('target.csv')
+    except FileNotFoundError:
+        logger.error("+++target file not found+++")
+        return
 
     logger.info("---validating input and target---")
     if not validate_input_target(input_list, target_list):
