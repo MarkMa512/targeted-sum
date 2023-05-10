@@ -14,9 +14,9 @@ No additional libraries are required.
 ### Project Structure
 - `combination`: contains functions to generate the combinations for the targeted sum 
 - `media`: folders to store media files, such as images and videos 
-- `utility': contains utility functions, such as csv file reader/writer and validation functions 
-- `main.py': main program 
-- `test.py': testing the program for different inputs and target scenarios 
+- `utility`: contains utility functions, such as csv file reader/writer and validation functions 
+- `main.py`: main program 
+- `test.py`: testing the program for different inputs and target scenarios 
 
 ### Algorithms 
 
@@ -40,7 +40,7 @@ No additional libraries are required.
     ```
 3. Once you have downloaded the project, prepare your input as a column in Excel, shown as below, save it as `input.csv` in the targeted-sum folder. Prepare your target as a column in Excel, shown as below, save it as `target.csv` in the targeted-sum folder. 
 
-| `input.csv`  | 'target.csv' |
+| `input.csv`  | `target.csv` |
 | ------------- | ------------- |
 | ![input](media/input.png) | ![target](media/target.png) |
 
@@ -71,20 +71,21 @@ No additional libraries are required.
 
     If there is no viable combination, a warning message will be printed in the terminal / command prompt: 
 
-    > 2023-05-10 15:06:01 INFO test.py:test():20: =====validating input and target===== 
-    > ... 
-    > 2023-05-10 15:06:01 INFO test.py:test():29: =====validating result===== 
-    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():112: ---validating viable result sets--- 
-    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():114: ---0 viable result sets found--- 
-    > 2023-05-10 15:06:01 ERROR validation.py:validate_viable_result_sets():116: +++viable result sets is empty!+++ 
-    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():117: ===No viable combination found=== 
+    > 2023-05-10 15:06:01 INFO test.py:test():20: =====validating input and target=====  
+    > ...  
+    > 2023-05-10 15:06:01 INFO test.py:test():29: =====validating result=====  
+    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():112: ---validating viable result sets---  
+    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():114: ---0 viable result sets found---  
+    > 2023-05-10 15:06:01 ERROR validation.py:validate_viable_result_sets():116: +++viable result sets is empty!+++  
+    > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():117: ===No viable combination found===  
     
-    The combination will also be printed in the terminal / command prompt. 
-    > 2023-05-10 15:08:17 INFO validation.py:validate_result():70: ---validating result--- 
-    > 2023-05-10 15:08:17 INFO validation.py:validate_result():108: ===result is valid=== 
-    > 2023-05-10 15:08:17 INFO main.py:main():46: ---result 5 is valid--- 
-    > [[1, 8], [3, 5, 9], [5, 12]] 
-    > 2023-05-10 15:08:17 INFO csv.py:export_to_csv():26: ---exporting to result_5.csv--- 
+    The combination will also be printed in the terminal / command prompt:  
+
+    > 2023-05-10 15:08:17 INFO validation.py:validate_result():70: ---validating result---  
+    > 2023-05-10 15:08:17 INFO validation.py:validate_result():108: ===result is valid===  
+    > 2023-05-10 15:08:17 INFO main.py:main():46: ---result 5 is valid---  
+    > [[1, 8], [3, 5, 9], [5, 12]]  
+    > 2023-05-10 15:08:17 INFO csv.py:export_to_csv():26: ---exporting to result_5.csv---  
 
 ## Features 
 
