@@ -38,11 +38,16 @@ No additional libraries are required.
     ```sh
     git clone https://github.com/MarkMa512/targeted-sum.git
     ```
-3. Once you have downloaded the project, prepare your input as a column in Excel, shown as below, save it as `input.csv` in the targeted-sum folder. Prepare your target as a column in Excel, shown as below, save it as `target.csv` in the targeted-sum folder. 
+3. Once you have downloaded the project, prepare your input as a **column** in Excel, shown as below, save as a CSV file named `input.csv` in the targeted-sum folder. Prepare your target as a column in Excel, shown as below, save it as a CSV file named `target.csv` in the `targeted-sum` folder. 
 
 | `input.csv`  | `target.csv` |
 | ------------- | ------------- |
 | ![input](media/input.png) | ![target](media/target.png) |
+
+![csv_format](media/csv_format.png)
+
+**Important Node**  
+DO NOT save it as a CSV UTF-8 (Comma delimited) (.csv) file, as it will cause an error when you run the program. 
 
 4. Launch your terminal / command prompt. 
     - For Windows users, you can launch your command prompt by pressing `Windows + R` and type in `cmd` in the pop-up window.
