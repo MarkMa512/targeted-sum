@@ -89,9 +89,9 @@ No additional libraries are required.
 
 ## Features 
 
-[x] 1. Calculate targeted sum for a input list of unique integers to another list of unique integers as target. 
-[x] 2. Calculate targeted sum for a input list of non-unique integers to another list of non-unique integers as target. 
-[x] 3. Calculate targeted sum for a input list of non-unique integers to another list of non-unique integers as target, for both positive and negative integers. 
-[ ] Calculate targeted sum for a input list of non-unique integers to another list of integers as target, for both positive and negative integers, and zeros. 
-[ ] Expose the program as a REST API. 
-[ ] Expose the program as a web application. 
+- [x] 1. Calculate targeted sum for a input list of unique integers to another list of unique integers as target. 
+- [x] 2. Calculate targeted sum for a input list of non-unique integers to another list of non-unique integers as target. 
+- [x] 3. Calculate targeted sum for a input list of non-unique integers to another list of non-unique integers as target, for both positive and negative integers. 
+- [ ] 4. Calculate targeted sum for a input list of non-unique integers to another list of integers as target, for both positive and negative integers, and zeros. 
+- [ ] 5. Expose the program as a REST API. 
+- [ ] 6. Expose the program as a web application. 
