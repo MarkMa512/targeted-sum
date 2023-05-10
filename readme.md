@@ -47,7 +47,7 @@ No additional libraries are required.
 ![csv_format](media/csv_format.png)
 
 **Important Node**  
-DO NOT save it as a CSV UTF-8 (Comma delimited) (.csv) file, as it will cause an error when you run the program. 
+DO NOT choose the  `CSV UTF-8 (Comma delimited)` option from excel, as it will cause an error when you run the program. 
 
 4. Launch your terminal / command prompt. 
     - For Windows users, you can launch your command prompt by pressing `Windows + R` and type in `cmd` in the pop-up window.
