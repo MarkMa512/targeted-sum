@@ -44,7 +44,7 @@ def main()->None:
     for result in viable_results:
         if validate_result(result=result, input_list=input_list, output_list=target_list):
             logger.info(f"---result {counter} is valid---")
-            print(result)
+            print(f"combination {counter} for {target_list}: {result}")
             export_to_csv(result, f"result_{counter}.csv")
             counter += 1
     logger.info("---done---")

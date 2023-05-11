@@ -84,13 +84,14 @@ DO NOT choose the  `CSV UTF-8 (Comma delimited)` option from excel, as it will c
     > 2023-05-10 15:06:01 ERROR validation.py:validate_viable_result_sets():116: +++viable result sets is empty!+++  
     > 2023-05-10 15:06:01 INFO validation.py:validate_viable_result_sets():117: ===No viable combination found===  
     
-    The combination will also be printed in the terminal / command prompt:  
+    Each viable combination will also be printed in the terminal / command prompt:  
 
-    > 2023-05-10 15:08:17 INFO validation.py:validate_result():70: ---validating result---  
-    > 2023-05-10 15:08:17 INFO validation.py:validate_result():108: ===result is valid===  
-    > 2023-05-10 15:08:17 INFO main.py:main():46: ---result 5 is valid---  
-    > [[1, 8], [3, 5, 9], [5, 12]]  
-    > 2023-05-10 15:08:17 INFO csv.py:export_to_csv():26: ---exporting to result_5.csv---  
+    > 2023-05-12 01:52:27 INFO validation.py:validate_result():70: ---validating result---  
+    > 2023-05-12 01:52:27 INFO validation.py:validate_result():79: ===length of result is equal to length of target!===  
+    > 2023-05-12 01:52:27 INFO validation.py:validate_result():108: ===result is valid===  
+    > 2023-05-12 01:52:27 INFO main.py:main():46: ---result 7 is valid---  
+    > combination 7 for [9, 17, 17]: [[1, 8], [3, 5, 9], [5, 12]]  
+    > 2023-05-12 01:52:27 INFO csv.py:export_to_csv():26: ---exporting to result_7.csv---  
 
 ## Features 
 

@@ -84,14 +84,14 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
     
     for combination in result:
         combination_count: Dict[int, int] = Counter(combination)
-        logger.info('---checking if result contains empty combination---')
+        # logger.info('---checking if result contains empty combination---')
         if len(combination) == 0:
             logger.error('+++result contains empty combination!+++')
             return False
         # logger.info('---checking each combination for counts of elements less than or equal to the counts of the same elements in x---')
         for key in combination_count:
             # check for individual combination, if the count of an element in a combination is greater than the count of the same element in x, return False
-            logger.info(f'---count of {key} in combination: {combination_count[key]}, count of {key} in x: {x_element_count[key]}---')
+            # logger.info(f'---count of {key} in combination: {combination_count[key]}, count of {key} in x: {x_element_count[key]}---')
             if combination_count[key] > x_element_count[key]:
                 logger.error('+++result is invalid, count of %s in result is greater than count of %s in input in a combination+++', key, key)
                 return False
@@ -100,7 +100,7 @@ def validate_result(result: List[List[int]], input_list: List[int],output_list:L
     # logger.info('---checking the whole result for counts of elements less than or equal to the counts of the same elements in x---')    
     # check for the whole result, if the count of an element in result is not equal to the count of the same element in x, return False
     for key in x_element_count:
-        logger.info(f'---count of {key} in x: {x_element_count[key]}, count of {key} in result: {result_element_count[key]}---')
+        # logger.info(f'---count of {key} in x: {x_element_count[key]}, count of {key} in result: {result_element_count[key]}---')
         if result_element_count[key] != x_element_count[key]:
             logger.error('+++result is invalid, count of %s in result is not equal to count of %s in input+++', key, key)
             return False
